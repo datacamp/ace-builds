@@ -175,7 +175,7 @@ var PythonHighlightRules = function() {
         "output" : [
             {
                 token : "identifier",
-                regex : "^(In|Out) \\[\\d*\\]",
+                regex : "^(In |Out)\\[\\d*\\]",
                 next  : "start"
             },
             {
