@@ -58,6 +58,11 @@ var PythonHighlightRules = function() {
             next : "error"
         },
         {
+            token : "output",
+            regex : "^<[a-zA-Z0-9_\\-\\.]+> output",
+            next  : "output"
+        },
+        {
             token : "comment",
             regex : "#.*$"
         }, {
