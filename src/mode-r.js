@@ -101,11 +101,6 @@ define("ace/mode/r_highlight_rules",["require","exports","module","ace/lib/oop",
       this.$rules = {
          "start" : [
             {
-               token: "error",
-               regex: "^(Error|unexpected).*",
-               next : "error",
-            },
-            {
                token : "comment.sectionhead",
                regex : "#+(?!').*(?:----|====|####)\\s*$"
             },
@@ -208,17 +203,6 @@ define("ace/mode/r_highlight_rules",["require","exports","module","ace/lib/oop",
                regex : '.+'
             }
          ],
-         "error" : [
-            {
-               token : "keyword.operator",
-               regex : "^> ",
-               next : "start"
-            },
-            {
-               token : "error",
-               regex : '.+'
-            }
-         ]
       };
 
       var rdRules = new TexHighlightRules("comment").getRules();
