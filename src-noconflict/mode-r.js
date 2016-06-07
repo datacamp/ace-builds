@@ -210,9 +210,9 @@ ace.define("ace/mode/r_highlight_rules",["require","exports","module","ace/lib/o
          ],
          "error" : [
             {
-               token : "error",
+               token : "keyword.operator",
                regex : "^> ",
-               next : "keyword.operator"
+               next : "start"
             },
             {
                token : "error",
