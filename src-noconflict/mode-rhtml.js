@@ -2639,8 +2639,8 @@ ace.define("ace/mode/r_highlight_rules",["require","exports","module","ace/lib/o
          "error" : [
             {
                token : "error",
-               regex : "(?:^> .*)",
-               next : "start"
+               regex : "^> ",
+               next : "keyword.operator"
             },
             {
                token : "error",
