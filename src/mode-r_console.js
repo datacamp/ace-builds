@@ -106,6 +106,11 @@ define("ace/mode/r_console_highlight_rules",["require","exports","module","ace/l
                next : "error",
             },
             {
+               token: "output",
+               regex: "^((?!(Error|unexpected|>|\\.{3})\\s).*)",
+               next : "ouput",
+            },
+            {
                token : "comment.sectionhead",
                regex : "#+(?!').*(?:----|====|####)\\s*$"
             },
@@ -216,6 +221,17 @@ define("ace/mode/r_console_highlight_rules",["require","exports","module","ace/l
             },
             {
                token : "error",
+               regex : '.+'
+            }
+         ],
+         "ouput" : [
+            {
+               token : "text",
+               regex : "^> ",
+               next : "start"
+            },
+            {
+               token : "output",
                regex : '.+'
             }
          ]
