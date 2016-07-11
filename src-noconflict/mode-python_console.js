@@ -54,7 +54,7 @@ var PythonHighlightRules = function() {
         "start" : [
         {
             token : "error",
-            regex : "^\\s*(Traceback|SyntaxError)",
+            regex : "^\\s*(Traceback|SyntaxError|DataCamp encountered the following error)",
             next : "error"
         },
         {
