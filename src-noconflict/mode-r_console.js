@@ -102,7 +102,7 @@ ace.define("ace/mode/r_console_highlight_rules",["require","exports","module","a
          "start" : [
             {
                token: "error",
-               regex: "^(Error|unexpected).*",
+               regex: "^(Error|unexpected|DataCamp encountered the following error).*",
                next : "error",
             },
             {
@@ -217,6 +217,11 @@ ace.define("ace/mode/r_console_highlight_rules",["require","exports","module","a
             {
                token : "keyword.operator",
                regex : "^> ",
+               next : "start"
+            },
+            {
+               token : "identifier",
+               regex : ".*\\[y\\|n\\].*",
                next : "start"
             },
             {

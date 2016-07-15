@@ -164,6 +164,11 @@ var PythonHighlightRules = function() {
                 next  : "start"
             },
             {
+               token : "identifier",
+               regex : ".*\\[y\\|n\\].*",
+               next : "start"
+            },
+            {
                 token : "output",
                 regex : "^<[a-zA-Z0-9_\\-\\.]+> output",
                 next  : "output"
