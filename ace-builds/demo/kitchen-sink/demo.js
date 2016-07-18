@@ -10920,7 +10920,7 @@ var Autocomplete = function() {
         this.popup.setData(this.completions.filtered);
 
         editor.keyBinding.addKeyboardHandler(this.keyboardHandler);
-        
+
         var renderer = editor.renderer;
         this.popup.setRow(this.autoSelect ? 0 : -1);
         if (!keepPopupPosition) {
@@ -11108,6 +11108,11 @@ var Autocomplete = function() {
             var prefix = this.editor.session.getTextRange({start: this.base, end: pos});
             if (prefix == this.completions.filterText)
                 return;
+            if ( this.inCompletionFetching) {
+                this.prefix = prefix;
+            } else {
+                this.prefix = false;
+            }
             this.completions.setFilter(prefix);
             if (!this.completions.filtered.length)
                 return this.detach();
@@ -11125,6 +11130,8 @@ var Autocomplete = function() {
                 return this.detach();
             }.bind(this);
 
+            this.inCompletionFetching = !results.finished;
+
             var prefix = results.prefix;
             var matches = results && results.matches;
 
@@ -11138,7 +11145,7 @@ var Autocomplete = function() {
             if (this.exactMatch)
                 this.completions.exactMatch = true;
 
-            this.completions.setFilter(prefix);
+            this.completions.setFilter(this.prefix || prefix);
             var filtered = this.completions.filtered;
             if (!filtered.length)
                 return detachIfFinished();
