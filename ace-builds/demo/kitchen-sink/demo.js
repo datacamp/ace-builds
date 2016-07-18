@@ -11146,6 +11146,7 @@ var Autocomplete = function() {
                 this.completions.exactMatch = true;
 
             this.completions.setFilter(this.prefix || prefix);
+            this.prefix = this.inCompletionFetching === false ? false : this.prefix;
             var filtered = this.completions.filtered;
             if (!filtered.length)
                 return detachIfFinished();
