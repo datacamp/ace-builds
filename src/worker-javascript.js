@@ -11775,7 +11775,7 @@ oop.inherits(JavaScriptWorker, Mirror);
 
         var errors = [];
         var maxErrorLevel = this.isValidJS(value) ? "warning" : "error";
-        lint(value, this.options, this.options.globals);
+        lint(value, this.options);
         var results = lint.errors;
 
         var errorAdded = false
