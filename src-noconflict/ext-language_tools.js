@@ -1362,7 +1362,7 @@ var Autocomplete = function() {
         this.popup.setData(this.completions.filtered);
 
         editor.keyBinding.addKeyboardHandler(this.keyboardHandler);
-
+        
         var renderer = editor.renderer;
         this.popup.setRow(this.autoSelect ? 0 : -1);
         if (!keepPopupPosition) {
@@ -1392,7 +1392,6 @@ var Autocomplete = function() {
         this.editor.off("mousedown", this.mousedownListener);
         this.editor.off("mousewheel", this.mousewheelListener);
         this.changeTimer.cancel();
-        this.inCompletionFetching = false;
         this.hideDocTooltip();
 
         this.gatherCompletionsId += 1;
@@ -1500,7 +1499,6 @@ var Autocomplete = function() {
         var session = editor.getSession();
         var pos = editor.getCursorPosition();
 
-        var line = session.getLine(pos.row);
         var prefix = util.getCompletionPrefix(editor);
 
         this.base = session.doc.createAnchor(pos.row, pos.column - prefix.length);
@@ -1508,16 +1506,12 @@ var Autocomplete = function() {
 
         var matches = [];
         var total = editor.completers.length;
-        var self = this;
         editor.completers.forEach(function(completer, i) {
-            self.inCompletionFetching = true;
             completer.getCompletions(editor, session, pos, prefix, function(err, results) {
                 if (!err && results)
                     matches = matches.concat(results);
-                var pos = editor.getCursorPosition();
-                var line = session.getLine(pos.row);
                 callback(null, {
-                    prefix: prefix,
+                    prefix: util.getCompletionPrefix(editor),
                     matches: matches,
                     finished: (--total === 0)
                 });
@@ -1548,11 +1542,6 @@ var Autocomplete = function() {
     };
 
     this.updateCompletions = function(keepPopupPosition) {
-        if (this.inCompletionFetching) { //before filtering or refetching completions
-            this.changeTimer.schedule(50);
-            return;
-        }
-
         if (keepPopupPosition && this.base && this.completions) {
             var pos = this.editor.getCursorPosition();
             var prefix = this.editor.session.getTextRange({start: this.base, end: pos});
@@ -1575,8 +1564,6 @@ var Autocomplete = function() {
                 return this.detach();
             }.bind(this);
 
-            this.inCompletionFetching = !results.finished;
-
             var prefix = results.prefix;
             var matches = results && results.matches;
 
@@ -1590,7 +1577,7 @@ var Autocomplete = function() {
             if (this.exactMatch)
                 this.completions.exactMatch = true;
 
-            this.completions.setFilter( prefix );
+            this.completions.setFilter(prefix);
             var filtered = this.completions.filtered;
             if (!filtered.length)
                 return detachIfFinished();
